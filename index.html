@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+
+
+<script>
+	var canvas = document.getElementById("myCanvas");
+	canvas.width = window.innerWidth*0.8;
+	canvas.height = window.innerHeight*0.8;
+	
+	var cxt = canvas.getContext('2d');
+	cxt.fillStyle = "red";
+	var pen_lifted = true
+
+	function draw(x,y){	
+		if(pen_lifted){
+			cxt.beginPath();
+			cxt.arc(x, y, 10, 0, 2*Math.PI);
+			cxt.fill();
+		}
+	}
+
+	canvas.addEventListener('mousemove', function (e) {
+	    
+	    draw(e.offsetX, e.offsetY);
+	});
+
+	window.addEventListener('keydown', function(e) {
+		console.log("press")
+		if (e.keyCode == 82) {
+			cxt.fillStyle = "red";
+		}if(e.keyCode==89){
+			cxt.fillStyle = "yellow";
+		}if(e.keyCode==71){
+			cxt.fillStyle = "green";
+		}if(e.keyCode==66){
+			cxt.fillStyle = "blue";
+		}if(e.keyCode == 32){
+			cxt.clearRect(0, 0, canvas.width, canvas.height);
+		}if(e.keyCode == 38){
+			pen_lifted = false;
+		}if(e.keyCode == 40){
+			pen_lifted = true;
+		}
+	})
+	
+	function change(e){
+	    cxt.fillStyle = this.value;
+	}
+	document.getElementById("picker").onchange = change;
+
+</script>
+</body>
+</html>
